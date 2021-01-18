@@ -51,34 +51,20 @@ void Client::viderPanier(){
 
 //Modifie la quantité du produit passé en paramètre
 void Client::modifierQuant(Produit pdt, int nbQ){
-	int cpt=0;
 	for(std::size_t i = 0; i < getPanier().size(); ++i) //Pour tout les produits dans le panier
 	{
-		if (getPanier().at(i).getID() == pdt.getID()){//Si le produit courrant est égale au produit passé en paramètre
-			cpt++;
-		}
-	}
-	
-	//Nouvelle Quantité = Quantité passé en paramètre - le nombre de ce produit déjà existant dans le panier
-	int newQuantite = nbQ - cpt;
-	if(newQuantite > 0){//si le client a choisit une quantité supérieur à celle de base
-		for(int i=0;i<newQuantite;i++){
-			addProduit(pdt);
-		}
-	}else{//sinon
-		for(int i = newQuantite;i<0;i++){
-			delProduit(pdt);
+		if (getPanier().at(i).getID() == pdt.getID()){//Si le produit courant est égale au produit passé en paramètre
+			getPanier().at(i).setQuant(nbQ);
 		}
 	}
 }
 
 //Supprime le produit passé en paramètre dans le panier
 void Client::delProduit(Produit pdt){
-	for(std::size_t i=0; i < getPanier().size(); i++)
+	for(int i=0; i < getPanier().size(); i++)
 	{
-		if(getPanier().at(i).getID() == pdt.getID()){//Si le produit courrant est égale au produit passé en paramètre
-			getPanier().erase(getPanier().begin() + i);
-			i = getPanier().size();//quitter la boucle pour pas supprimer tout les produits
+		if(getPanier().at(i).getID() == pdt.getID()){//Si le produit courant est égale au produit passé en paramètre
+			_panier.erase(_panier.begin() + i);
 		}
 	}
 }
@@ -89,9 +75,9 @@ std::ostream& operator << (std::ostream &out, const Client &c){
 	out << "Prenom = " << c._prenom << std::endl;
 	out << "Nom = " << c._nom << std::endl;
 	out << "Produits dans le panier :" << std::endl;
-	
+	out << "| ID Name          Description             Quantity     Price       |" << std::endl;
 	for(std::size_t i=0; i < c.getPanier().size(); i++){
-		out << c.getPanier().at(i).getTitre() << "	" << c.getPanier().at(i).getDesc() << "		" << c.getPanier().at(i).getPrixU() << std::endl;
+		out << c.getPanier().at(i).getID() << "   " << c.getPanier().at(i).getTitre() << "	" << c.getPanier().at(i).getDesc() << "		" << c.getPanier().at(i).getQuantD() << "		" << c.getPanier().at(i).getPrixU() << std::endl;
 	}
 	return out;
 }

@@ -20,5 +20,20 @@ int main()
 	micromania.AffichageClient("Hubert", "Roche");
 	micromania.AffichageClients();
 
+	micromania.AjoutProduitPanier(0, 0, 5);
+	micromania.AjoutProduitPanier(1, 0, 5);
+	micromania.AffichageClient(0);
+	micromania.SuppProduitPanier(1, 0);
+	micromania.AffichageClient(0);
+	micromania.ModifQuantProdPanier(0, 0, 4);
+	micromania.AffichageClient(0);
+	
+	
+	micromania.ValidationCommande(0);
+	micromania.AffichageCommandesDemandees();
+	micromania.AffichageCommandeDetail(0);
+	micromania.AffichageCommandeClient(0);
+	micromania.MajStatutCommande(0, true);
 
+	micromania.~Magasin();
 }
