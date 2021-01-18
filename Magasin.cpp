@@ -29,7 +29,7 @@ void Magasin::AffichageProduits() const
 	std::cout << Creationmenu(1);
 	std::cout << "| Products                                                       |\n";
 	std::cout << Creationmenu(2);
-	std::cout << "| ID  Name          Description             Quantity     Price       |\n";
+	std::cout << "| Name          Description             Quantity     Price       |\n";
 	std::cout << Creationmenu(2);
 	
 	for (int i = 0; i < m_products.size(); i++)
@@ -52,9 +52,9 @@ void Magasin::AffichageProduit(std::string titre) const
 	if (referenceProd >= 0)
 	{
 		std::cout << Creationmenu(1);
-		std::cout << "| Details of a product                                              |\n";
+		std::cout << "| Details of a product                                           |\n";
 		std::cout << Creationmenu(2);
-		std::cout << "| ID Name          Description             Quantity     Price       |\n";
+		std::cout << "| Name          Description             Quantity     Price       |\n";
 		std::cout << Creationmenu(2);
 		std::cout << "| " << *m_products.at(referenceProd) << " |\n";
 		std::cout << Creationmenu(1);
@@ -68,14 +68,6 @@ void Magasin::AjoutQuantiteProduit(std::string titre, int quantité)
 {
 	AjoutProduit(titre," ",quantité,0);
 }
-
-void Magasin::AjoutQuantiteProduit(int IdProduit, int quantité)
-{
-	int nouvQuantite = m_products.at(IdProduit)->getQuantD() + quantité;
-	m_products.at(IdProduit)->setQuant(nouvQuantite);
-}
-
-
 
 void Magasin::AjoutClient(std::string prenom, std::string nom, std::vector<Produit> panier)
 {
@@ -120,167 +112,27 @@ void Magasin::AffichageClient(std::string prenom, std::string nom ) const
 	}
 }
 
-void Magasin::AffichageClient(int IdClient)
+void Magasin::AffichageClient(int id)
 {
 	std::cout << Creationmenu(1);
-	std::cout << *m_clients.at(IdClient);
-	std::cout << Creationmenu(1);
-	std::cout << std::endl;
-}
-
-
-void Magasin::AjoutProduitPanier(int IdProduit , int IdClient, int quantite)
-{
-
-	if (m_products.at(IdProduit)->getQuantD() >= quantite) // verif si il y a des stocks
-	{
-		Produit produit = *m_products.at(IdProduit);
-		produit.setQuant(quantite);
-		m_clients.at(IdClient)->addProduit(produit);
-		std::cout << "Produit ajouté\n";
-	}
-	else
-	{
-		std::cout << "Il n'y a pas assez de stocks \n";
-	}
-}
-
-void Magasin::SuppProduitPanier(int IdProduit, int IdClient)
-{
-	Produit produit(0,"", "", 0, 0);
-	for (std::size_t i = 0; i < m_clients.at(IdClient)->getPanier().size(); i++)
-	{
-		if (m_clients.at(IdClient)->getPanier().at(i).getID() == IdProduit)
-			produit = m_clients.at(IdClient)->getPanier().at(i);
-		std::cout << "Produit trouvé\n";
-	}
-	m_clients.at(IdClient)->delProduit(produit);
-	std::cout << "Produit supprimé\n";
-}
-
-void Magasin::ModifQuantProdPanier(int IdProduit, int IdClient, int quantite)
-{
-	Produit produit(0, "", "", 0, 0);
-	for (std::size_t i = 0; i < m_clients.at(IdClient)->getPanier().size(); i++)
-	{
-		if (m_clients.at(IdClient)->getPanier().at(i).getID() == IdProduit)
-			produit = m_clients.at(IdClient)->getPanier().at(i);
-	}
-	if (m_products.at(produit.getID())->getQuantD() >= quantite)
-	{//verif si il y a des stocks
-		m_clients.at(IdClient)->modifierQuant(produit, quantite);
-		std::cout << "Produit modifié\n";
-	}
-}
-
-void Magasin::ViderPanier(int IdClient)
-{
-	m_clients.at(IdClient)->viderPanier();
-}
-
-
-
-void Magasin::ValidationCommande(int Idclient)
-{
-	Client client = *m_clients.at(Idclient);
-	// verif si il y a des stocks + suppression stocks
-	std::vector<Produit> produitsIndisponibles;
-	for (int i = 0; i < client.getPanier().size(); i++)
-	{
-		if (client.getPanier().at(i).getQuantD() > m_products.at(client.getPanier().at(i).getID())->getQuantD())
-			produitsIndisponibles.push_back(client.getPanier().at(i));
-	}
-
-	if (produitsIndisponibles.size() > 0)
-	{
-		//Afficher que les produits sont indisponibles
-		std::cout << " Les produits indisponibles sont :\n";
-		for (int j = 0; j < produitsIndisponibles.size(); j++)
-		{
-			std::cout << produitsIndisponibles.at(j).getTitre() << std::endl;
-		}
-	}
-	else
-	{
-		// Suppresion des produits commandés des stocks
-		for (int j = 0; j < client.getPanier().size(); j++) 
-		{
-			AjoutQuantiteProduit(client.getPanier().at(j).getID(), -client.getPanier().at(j).getQuantD());
-		}
-		
-		// Creation commande
-		Commande* commande = new Commande(m_orders.size(),client, client.getPanier(), false); 
-		m_orders.push_back(commande);
-
-		client.viderPanier();
-	}
-}
-
-void Magasin::MajStatutCommande(int IdCommande, bool statutSouhaite)
-{
-	if (m_orders.at(IdCommande)->getStatut() == statutSouhaite)
-	{
-		std::cout << " Le statut de votre commande était déjà similaire\n";
-	}
-	else
-	{
-		m_orders.at(IdCommande)->setStatut(statutSouhaite);
-		std::cout << "Statut modifié\n";
-	}
-}
-
-
-void Magasin::AffichageCommandesDemandees()
-{
-	std::cout << Creationmenu(1);
-	std::cout << "| Commandes en attente                                           |\n";
-	std::cout << Creationmenu(2);
-	std::cout << "| IDCommande   Prénom       Nom         Uid     Taille Commande  |\n";
-	std::cout << Creationmenu(2);
-	for (int i = 0; i < m_orders.size() ; i++)
-	{
-		if (!m_orders.at(i))
-		{
-			std::cout << "| " << m_orders.at(i)->AffichageSansDetail() << "|\n";
-		}
-	}
+	std::cout << *m_clients.at(id);
 	std::cout << Creationmenu(1);
 	std::cout << std::endl;
 }
 
-void Magasin::AffichageCommandeDetail(int idCommande)
+void Magasin::AjoutProduit(Produit produit, int Id)
 {
-	std::cout << Creationmenu(1);
-	std::cout << "| Commande" << idCommande << "                                |\n";
-	std::cout << Creationmenu(2);
-	std::cout << m_orders.at(idCommande);
-	std::cout << Creationmenu(2);
-	std::cout << std::endl;
+	m_clients.at(Id)->addProduit(produit);
 }
 
-void Magasin::AffichageCommandeClient(int idClient)
+void Magasin::SuppProduit(Produit produit, int Id)
 {
-	std::cout << Creationmenu(1);
-	std::cout << "| Commande" << idClient << "                                |\n";
-	std::cout << Creationmenu(2);
-	for (int g = 0; g < m_orders.size(); g++)
-	{
-		if (m_orders.at(g)->getClient().getID() == idClient)
-			std::cout << m_orders.at(g);
-	}
-
-	std::cout << Creationmenu(2);
-	std::cout << std::endl;
+	m_clients.at(Id)->delProduit(produit);
 }
 
-
-
-
-Magasin::~Magasin()
+void Magasin::ModifQuantProd(Produit produit, int Id, int quantite)
 {
-	m_clients.~vector();
-	m_orders.~vector();
-	m_products.~vector();
+	m_clients.at(Id)->modifierQuant(produit, quantite);
 }
 
 std::string Magasin::Creationmenu(int typeLigne) const

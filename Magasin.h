@@ -25,6 +25,7 @@ public:
 	void SuppProduitPanier(int IdProduit, int IdClient);
 	void ModifQuantProdPanier(int IdProduit, int IdClient, int quantite);
 	void ViderPanier(int IdClient);
+	void AffichagePanierClient(int IdClient);
 
 	void ValidationCommande(int Idclient);
 	void MajStatutCommande(int IdCommande, bool statusSouhaite);

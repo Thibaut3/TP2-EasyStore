@@ -17,7 +17,7 @@ public:
 	void setQuant(int quantite);
 	void setPrixU(double prix);
 	friend std::ostream& operator << (std::ostream &out, const Produit &pdt){
-		out << pdt._ID << ' ' << pdt._titre << ' ' << pdt._description << " (" << pdt._quantiteDisp << ") " << pdt._prixUnit << " $";
+		out << pdt._titre << ' ' << pdt._description << " (" << pdt._quantiteDisp << ") " << pdt._prixUnit << " $";
 		return out;
 	}
 private :
