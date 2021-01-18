@@ -52,9 +52,9 @@ void Magasin::AffichageProduit(std::string titre) const
 	if (referenceProd >= 0)
 	{
 		std::cout << Creationmenu(1);
-		std::cout << "| Details of a product                                              |\n";
+		std::cout << "| Details of a product                                         |\n";
 		std::cout << Creationmenu(2);
-		std::cout << "| ID Name          Description             Quantity     Price       |\n";
+		std::cout << "| ID Name          Description             Quantity     Price  |\n";
 		std::cout << Creationmenu(2);
 		std::cout << "| " << *m_products.at(referenceProd) << " |\n";
 		std::cout << Creationmenu(1);
@@ -152,7 +152,6 @@ void Magasin::SuppProduitPanier(int IdProduit, int IdClient)
 	{
 		if (m_clients.at(IdClient)->getPanier().at(i).getID() == IdProduit)
 			produit = m_clients.at(IdClient)->getPanier().at(i);
-		std::cout << "Produit trouvé\n";
 	}
 	m_clients.at(IdClient)->delProduit(produit);
 	std::cout << "Produit supprimé\n";
@@ -169,7 +168,7 @@ void Magasin::ModifQuantProdPanier(int IdProduit, int IdClient, int quantite)
 	if (m_products.at(produit.getID())->getQuantD() >= quantite)
 	{//verif si il y a des stocks
 		m_clients.at(IdClient)->modifierQuant(produit, quantite);
-		std::cout << "Produit modifié\n";
+		std::cout << "Quantite modifié\n";
 	}
 }
 
@@ -210,6 +209,7 @@ void Magasin::ValidationCommande(int Idclient)
 		
 		// Creation commande
 		Commande* commande = new Commande(m_orders.size(),client, client.getPanier(), false); 
+		std::cout << *commande;
 		m_orders.push_back(commande);
 
 		client.viderPanier();
@@ -235,11 +235,11 @@ void Magasin::AffichageCommandesDemandees()
 	std::cout << Creationmenu(1);
 	std::cout << "| Commandes en attente                                           |\n";
 	std::cout << Creationmenu(2);
-	std::cout << "| IDCommande   Prénom       Nom         Uid     Taille Commande  |\n";
+	std::cout << "| IDCommande   Prenom       Nom         Uid     Taille Commande  |\n";
 	std::cout << Creationmenu(2);
 	for (int i = 0; i < m_orders.size() ; i++)
 	{
-		if (!m_orders.at(i))
+		if (!m_orders.at(i)->getStatut())
 		{
 			std::cout << "| " << m_orders.at(i)->AffichageSansDetail() << "|\n";
 		}
@@ -253,7 +253,7 @@ void Magasin::AffichageCommandeDetail(int idCommande)
 	std::cout << Creationmenu(1);
 	std::cout << "| Commande" << idCommande << "                                |\n";
 	std::cout << Creationmenu(2);
-	std::cout << m_orders.at(idCommande);
+	std::cout << *m_orders.at(idCommande);
 	std::cout << Creationmenu(2);
 	std::cout << std::endl;
 }
@@ -266,7 +266,7 @@ void Magasin::AffichageCommandeClient(int idClient)
 	for (int g = 0; g < m_orders.size(); g++)
 	{
 		if (m_orders.at(g)->getClient().getID() == idClient)
-			std::cout << m_orders.at(g);
+			std::cout << *m_orders.at(g);
 	}
 
 	std::cout << Creationmenu(2);

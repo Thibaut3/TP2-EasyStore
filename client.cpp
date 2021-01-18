@@ -54,7 +54,9 @@ void Client::modifierQuant(Produit pdt, int nbQ){
 	for(std::size_t i = 0; i < getPanier().size(); ++i) //Pour tout les produits dans le panier
 	{
 		if (getPanier().at(i).getID() == pdt.getID()){//Si le produit courant est égale au produit passé en paramètre
-			getPanier().at(i).setQuant(nbQ);
+			_panier.at(i).setQuant(nbQ);
+			std::cout << nbQ << std::endl;
+			std::cout << _panier.at(i) << std::endl;
 		}
 	}
 }

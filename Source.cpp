@@ -1,9 +1,11 @@
 #include <iostream>
 #include "Magasin.h"
+#include <locale>
 
 
-int main()
+int main(int argc, wchar_t* argv[])
 {
+	setlocale(LC_CTYPE, "fra");
 	Magasin micromania;
 
 	micromania.AjoutProduit("PS5", "Tout nouveau !", 50, 599.99);
@@ -25,11 +27,12 @@ int main()
 	micromania.AffichageClient(0);
 	micromania.SuppProduitPanier(1, 0);
 	micromania.AffichageClient(0);
-	micromania.ModifQuantProdPanier(0, 0, 4);
+	micromania.ModifQuantProdPanier(0, 0, 2);
 	micromania.AffichageClient(0);
-	
+	micromania.AffichageProduits();
 	
 	micromania.ValidationCommande(0);
+	micromania.AffichageProduits();
 	micromania.AffichageCommandesDemandees();
 	micromania.AffichageCommandeDetail(0);
 	micromania.AffichageCommandeClient(0);

@@ -32,10 +32,11 @@ std::ostream& operator << (std::ostream &out, const Commande &com){
 	for(std::size_t i=0; i < com._pdtsCommand.size(); i++){
 		out << com._pdtsCommand.at(i).getTitre() << "	" << com._pdtsCommand.at(i).getDesc() << "		" << com._pdtsCommand.at(i).getPrixU() << std::endl;
 	}
+	out << "\nStatut :" ;
 	if(com._statut == false){
-		out << "\npas livrée" << std::endl;
+		out << " Non livree" << std::endl;
 	}else{
-		out << "\nlivrée" << std::endl;
+		out << " Livree" << std::endl;
 	}
 	return out;
 }
