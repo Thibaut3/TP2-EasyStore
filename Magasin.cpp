@@ -1,6 +1,7 @@
 #include "Magasin.h"
 
-Magasin::Magasin()
+Magasin::Magasin(std::string nomMagasin)
+	: m_nomMagasin(nomMagasin),m_enregistrement(Enregistrement(nomMagasin))
 {
 }
 
@@ -82,6 +83,7 @@ void Magasin::AjoutClient(std::string prenom, std::string nom, std::vector<Produ
 	Client* client = new Client(m_clients.size(), prenom, nom, panier);
 	m_clients.push_back(client);
 }
+
 void Magasin::AffichageClients() const
 {
 	std::cout << Creationmenu(1);
@@ -127,6 +129,8 @@ void Magasin::AffichageClient(int IdClient)
 	std::cout << Creationmenu(1);
 	std::cout << std::endl;
 }
+
+
 
 
 void Magasin::AjoutProduitPanier(int IdProduit , int IdClient, int quantite)
@@ -275,9 +279,100 @@ void Magasin::AffichageCommandeClient(int idClient)
 
 
 
+bool Magasin::VerificationIdProduitExistant(int idAVerifier)
+{
+	if (m_products.size() > idAVerifier)
+	{
+		return true; //l'id est attribué
+	}
+	else
+	{
+		return false; //l'id n'est pas attribué
+	}
+}
+
+bool Magasin::VerificationNomProduitExistant(std::string nomP)
+{
+	bool retour = false;
+	for (int i = 0; i < m_products.size(); i++)
+	{
+		if (m_products.at(i)->getTitre() == nomP )
+			retour = true;
+	}
+	return retour;
+}
+
+bool Magasin::VerificationIdClientExistant(int idAVerifier)
+{
+	if (m_clients.size() > idAVerifier)
+	{
+		return true; //l'id est attribué
+	}
+	else
+	{
+		return false; //l'id n'est pas attribué
+	}
+}
+
+bool Magasin::VerificationIdCommandeExistant(int idAVerifier)
+{
+	if (m_orders.size() > idAVerifier)
+	{
+		return true; //l'id est attribué
+	}
+	else
+	{
+		return false; //l'id n'est pas attribué
+	}
+}
+
+bool Magasin::VerificationNomPrenomClientExistant(std::string nom, std::string prenom)
+{
+	bool retour = false;
+	for (int i = 0; i < m_clients.size(); i++)
+	{
+		if (m_clients.at(i)->getNom() == nom && m_clients.at(i)->getPrenom() == prenom)
+			retour = true;
+	}
+	return retour;
+}
+
+
+int Magasin::VerificationIdentificationClientExistant(int id,std::string nom, std::string prenom)
+{
+	int retour = 0;
+	if (VerificationNomPrenomClientExistant(nom,prenom))
+	{
+		retour = 2;
+	}
+	if (m_clients.size() > id)
+	{
+		retour++; //l'id est attribué
+		if (m_clients.at(id)->getNom() == nom && m_clients.at(id)->getPrenom() == prenom)
+		{
+			retour += 3;
+		}
+	}
+	
+	return retour; // 0 : rien n'est bon , 1 : id bon reste non, 2 : NP bon reste non ,3 : id et NP bon , 6 : tout est bon
+}
+
+bool Magasin::VerificationMenu(int choix, int max)
+{
+	if (choix >= 0 && choix <= max)
+		return true;
+	else
+	{
+		return false;
+	}
+}
+
+
+
 
 Magasin::~Magasin()
 {
+	m_enregistrement.writeF(m_products, m_clients, m_orders);
 	m_clients.~vector();
 	m_orders.~vector();
 	m_products.~vector();

@@ -9,8 +9,8 @@
 //Classe Vue
 class Vue{
 public:
-	Vue();	
-	void menu(Magasin magasin);
+	Vue(std::string nomMagasin);	
+	void menu();
 private:
 	Magasin _magasin;
 	
@@ -21,29 +21,32 @@ private:
 	
 	void clear();
 	
-	void affichageGestionProduit();
-	void affichageComplexeProduit();
-	void affichageSimpleProduit();
-	void affichageAjoutProduit();
-	void affichageAjoutQuantiteProduit();
+	void _2_affichageGestionProduit();
+	void _21_affichageSimpleProduit();
+	void _22_affichageComplexeProduit();
+	void _23_affichageAjoutProduit();
+	void _24_affichageAjoutQuantiteProduit();
 	
-	void affichageGestionClient();
-	void affichageSimpleClient();
-	void affichageClientNP();
-	void affichageClientID();
-	void affichageAjoutClient();
+	void _3_affichageGestionClient();
+	void _31_affichageSimpleClient();
+	void _32_affichageClientNP();
+	void _33_affichageClientID();
+	void _34_affichageAjoutClient();
 	
-	void identificationClient();
-	void affichageMenuClient();
-	void affichageInfo();
-	void affichageAjoutPdtPanier();
-	void affichageSuppPdtPanier();
-	void affichageModifQuantPanier();
-	void affichageViderPanier();
+	void _4_affichageGestionCommande();
+	void _41_affichageCommandesDemandees();
+	void _411_affichageCommandeDetails();
+	void _42_affichageCommandeClient();
+	void _43_affichageMajStatutCommande();
+
+	void _50_identificationClient();
+	void _5_affichageMenuClient();
+	void _51_affichageInfo();
+	void _52_affichageAjoutPdtPanier();
+	void _53_affichageSuppPdtPanier();
+	void _54_affichageModifQuantPanier();
+	void _55_affichageViderPanier();
 	
-	void affichageGestionCommande();
-	void affichageMajStatutCommande();
-	void affichageCommandesDemandees();
-	void affichageCommandeClient();
+	
 };
 #endif

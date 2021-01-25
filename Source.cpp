@@ -1,12 +1,12 @@
 #include <iostream>
-#include "Magasin.h"
+#include "vue.h"
 #include <locale>
 
 
 int main(int argc, wchar_t* argv[])
 {
-	setlocale(LC_CTYPE, "fra");
-	Magasin micromania;
+	/*setlocale(LC_CTYPE, "fra");
+	Magasin micromania = Magasin("micromania");
 
 	micromania.AjoutProduit("PS5", "Tout nouveau !", 50, 599.99);
 	micromania.AjoutProduit("Xbox One", "Incontournable", 40, 199.99);
@@ -39,4 +39,8 @@ int main(int argc, wchar_t* argv[])
 	micromania.MajStatutCommande(0, true);
 
 	micromania.~Magasin();
+	*/
+	Vue vue = Vue("micromania");
+	vue.menu();
+	
 }

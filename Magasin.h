@@ -4,11 +4,12 @@
 #include "produit.h"
 #include "client.h"
 #include "commande.h"
+#include "enregistrement.h"
 
 class Magasin
 {
 public:
-	Magasin();
+	Magasin(std::string nomMagasin);
 
 	void AjoutProduit(std::string titre, std::string description, int quantite, double prix);
 	void AffichageProduits() const;
@@ -32,17 +33,25 @@ public:
 	void AffichageCommandeDetail(int idCommande);
 	void AffichageCommandeClient(int idClient);
 
+	bool VerificationIdProduitExistant(int idAVerifier);
+	bool VerificationNomProduitExistant(std::string nomP);
+	bool VerificationIdClientExistant(int idAVerifier);
+	bool VerificationIdCommandeExistant(int idAVerifier);
+	bool VerificationNomPrenomClientExistant(std::string nom, std::string prenom);
+	int VerificationIdentificationClientExistant(int id ,std::string nom, std::string prenom);
+	bool VerificationMenu(int choix, int max);
 
 	~Magasin();
 
 private:
-	
+	std::string m_nomMagasin;
+
 	std::vector<Produit*> m_products;
 	std::vector<Client*> m_clients;
 	std::vector<Commande*> m_orders;
 
 	std::string Creationmenu(int typeLigne) const;
-
+	Enregistrement m_enregistrement;
 
 };
 

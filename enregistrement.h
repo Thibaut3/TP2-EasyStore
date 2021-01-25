@@ -13,7 +13,7 @@
 class Enregistrement{
 public:
 	Enregistrement(std::string nomFichier);
-	void writeF(std::vector<Produit> pdts,std::vector<Client> clients,std::vector<Commande> commandes);
+	void writeF(std::vector<Produit*> pdts,std::vector<Client*> clients,std::vector<Commande*> commandes);
 	void openF();
 private:
 	std::string _nFichier;

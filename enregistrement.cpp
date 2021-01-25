@@ -4,19 +4,20 @@
 Enregistrement::Enregistrement(std::string nomFichier) : _nFichier(nomFichier){}
 
 //Ecriture des données
-void Enregistrement::writeF(std::vector<Produit> pdts,std::vector<Client> clients,std::vector<Commande> commandes){
+void Enregistrement::writeF(std::vector<Produit*> pdts,std::vector<Client*> clients,std::vector<Commande*> commandes){
 	std::ofstream fichier(_nFichier);
-	fichier << "Produits : \n";
+	fichier << "Produits :\n";
 	for( int i=0; i < pdts.size(); i++){
-		fichier << pdts[i];
+		fichier << pdts[i]->getID() << '|' << pdts[i]->getTitre() << '|' << pdts[i]->getDesc() << '|' << pdts[i]->getQuantD() << '|' << pdts[i]->getPrixU() << '|' << std::endl;
 	}
-	fichier << "Clients : \n";
+	fichier << "Clients :\n";
 	for( int i=0; i < clients.size(); i++){
-		fichier << clients[i];
+		fichier << clients[i]->getID() << '|' << clients[i]->getPrenom() << '|' << clients[i]->getNom() << std::endl;
+
 	}
-	fichier << "Commandes : \n";
+	fichier << "Commandes :\n";
 	for( int i=0; i < commandes.size(); i++){
-		fichier << commandes[i];
+		fichier << *commandes[i];
 	}
 	fichier.close();
 }
